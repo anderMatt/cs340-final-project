@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matthew Anderson",
-  "contributors": ["Christopher Piemonte"],
+  "contributors": [
+    "Christopher Piemonte"
+  ],
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
