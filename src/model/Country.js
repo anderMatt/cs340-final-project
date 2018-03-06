@@ -9,7 +9,7 @@ const db = require('../dbcon');
 function Country(){}
 
 Country.prototype.getById = function(id, callback) {
-	var query = 'SELECT * FROM country WHERE `id` = ?';
+	var query = 'SELECT * FROM countries WHERE `id` = ?';
 	db.query(query, [id], function(err, results) {
 		if(err) {
 			console.log('An err occured getting Country by id: ' + err);
