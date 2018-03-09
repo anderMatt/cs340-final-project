@@ -61,4 +61,17 @@ Athlete.prototype.getEvents = function(id, callback) {
     return callback();
 };
 
+
+Athlete.prototype.create = function(newAthlete, callback) {
+    var query = 'INSERT INTO athletes SET ?';
+    //console.log('Inside athlete.create. attributes: ' + JSON.stringify(newAthlete));
+    db.query(query, newAthlete, function(err, results) {
+        if(err) {
+            console.log("Error inserting new athlete: " + err);
+            return callback(err);
+        }
+        callback(null, results.insertId);
+    });
+};
+
 module.exports = new Athlete();

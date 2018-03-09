@@ -8,6 +8,17 @@ const db = require('../dbcon');
 
 function Country(){}
 
+Country.prototype.getAll = function(callback) {
+    var query = 'SELECT c.id AS countryId, c.name AS countryName ' +
+        'FROM countries c';
+    db.query(query, function(err, results) {
+        if(err) {
+            console.log('An err occured getting all countries: ' + err);
+        }
+        callback(null, results);
+    });
+};
+
 Country.prototype.getById = function(id, callback) {
 	var query = 'SELECT * FROM countries WHERE `id` = ?';
 	db.query(query, [id], function(err, results) {
