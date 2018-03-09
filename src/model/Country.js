@@ -20,19 +20,28 @@ Country.prototype.getById = function(id, callback) {
 };
 
 // TODO: get counts by medal type?
-Country.prototype.getMedalCounts = function(callback) {
-    var query = "SELECT c.name AS country, tmp.medal_count AS medalCount" +
-        "FROM countries c" +
-        "INNER JOIN (" +
-        "SELECT athletes.country_id AS cid, COUNT(medal.id) AS medal_count" +
-        "FROM athletes" +
-        "INNER JOIN medals ON athletes.id = medals.winner) AS tmp" +
-        "ON tmp.cid = c.id" +
-        "GROUP BY c.name";
-
+Country.prototype.getMedalCountsAllCountries = function(callback) {
+    var query = "SELECT c.id AS countryId, " +
+        "c.name AS countryName, COUNT(m.id) AS medalCount " +
+        "FROM medals m " +
+        "INNER JOIN athletes a ON m.winner = a.id " +
+        "INNER JOIN countries c ON c.id = a.country_id " +
+        "GROUP BY countryName " +
+        "ORDER BY medalCount DESC";
     db.query(query, function(err, results) {
         if(err) {
             console.log('An err occurred getting Country medal counts: ' + err);
+            return callback(err);
+        }
+        callback(null, results);
+    });
+};
+
+Country.prototype.getAthletes = function(countryId, callback) {
+    var query = "SELECT * FROM athletes a " +
+        "WHERE a.country_id = ?";
+    db.query(query, [countryId], function(err, results) {
+        if(err) {
             return callback(err);
         }
         callback(null, results);

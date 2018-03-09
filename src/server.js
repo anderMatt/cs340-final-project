@@ -16,6 +16,7 @@ app.set('port', process.argv[2] || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(express.static(__dirname + '/public'));
 
 
 /******************************

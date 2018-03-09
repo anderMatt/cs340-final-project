@@ -1,2 +1,13 @@
-<h1>MySQL Results:</h1>
-<p>{{results}}</p>
+<div class="row">
+    <h3>Country Standings - Total Medal Counts</h3>
+    <hr>
+    <ul class="list-group">
+        {{#each countries}}
+            <li class="list-group-item">
+                <span class="badge">{{medalCount}}</span>
+                <a href="/country/{{countryId}}"> {{countryName}} </a>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+

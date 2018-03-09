@@ -1,0 +1,30 @@
+<div class="row">
+    <h1 class="text-center">Athletes</h1>
+    {{#if athletes}}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Age</th>
+            <th>Gender</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each athletes}}
+        <tr>
+            <td><a href="/profile/{{athleteId}}"> {{firstName}} {{lastName}}</a></td>
+            <td>{{countryName}}</td>
+            <td>{{age}}</td>
+            <td>{{gender}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+
+    </table>
+    {{else}}
+        <div>There are no athletes! Add some below!</div>
+    {{/if}}
+
+    <div style="font-size:5em;"><strong>ADD ATHLETE FORM HERE?</strong></div>
+</div>

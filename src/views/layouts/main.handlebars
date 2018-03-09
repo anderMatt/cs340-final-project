@@ -1,9 +1,39 @@
 <!doctype html>
 <html>
 <head>
-	<title>Demo Page</title>
+	<title>Olympics</title>
+    <link rel="stylesheet" href="/vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    "<link rel="stylesheet" href="/main.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
+<div class="container">
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar-collapse-1" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-brand">
+            <a href="/"><img src="/o-rings.png" class="img-responsive"  alt="Olympics"></a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Countries</a></li>
+            <li><a href="/athletes">Athletes</a></li>
+        </ul>
+    </div>
+</div>
 	{{{body}}}
+</div> <!-- end of container -->
+    <script src="/vendor/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </body>
 </html>
