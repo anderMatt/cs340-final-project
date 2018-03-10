@@ -59,6 +59,9 @@ VALUES ([locationName]);
 SELECT l.id AS locationId, l.name AS locationName
 FROM locations l;
 
+-- Deletes a location. --
+DELETE FROM locations WHERE id = [locationId];
+
 -- Gets all events plus the name of the location where the event is occurring. --
 -- Output: {locationName, eventId, eventName} --
 SELECT l.name AS locationName, e.id AS eventId, e.name AS eventName

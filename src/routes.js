@@ -206,6 +206,7 @@ module.exports.init = function(app) {
                 .json(locations);
         });
     });
+
     apiRoutes.post('/location/create', function(req, res, next) {
         var newLocation = req.body;
         Location.create(newLocation, function(err, insertId) {
@@ -214,6 +215,17 @@ module.exports.init = function(app) {
             }
             return res.status(200)
                 .json({status: "success", id: insertId});
+        });
+    });
+
+    apiRoutes.delete('/location/:id', function(req, res, next) {
+        var locationId = req.params.id;
+        Location.delete(locationId, function(err, affectedRows) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success"});
         });
     });
 

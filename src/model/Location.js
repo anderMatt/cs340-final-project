@@ -31,4 +31,16 @@ Location.prototype.create = function(newLocation, callback) {
     });
 };
 
+Location.prototype.delete = function(id, callback) {
+    var query = 'DELETE FROM locations WHERE id = ?';
+
+    db.query(query, id, function(err, affectedRows) {
+        if(err) {
+            console.log("Error deleting a location: " + err);
+            return callback(err);
+        }
+        callback(null, affectedRows);
+    });
+};
+
 module.exports = new Location();

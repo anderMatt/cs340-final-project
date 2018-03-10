@@ -5,12 +5,14 @@
             <thead>
             <tr>
                 <th>Name</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {{#each locations}}
                 <tr>
                     <td>{{locationName}}</td>
+                    <td><button class="btn btn-danger deleteLocationBtn" data-location-id="{{locationId}}">Delete</button></td>
                 </tr>
             {{/each}}
             </tbody>

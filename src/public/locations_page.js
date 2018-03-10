@@ -1,6 +1,9 @@
 $(document).ready(function() {
     var newLocationForm = $('#addLocation');
     var submitBtn = $('#submitLocation');
+    var deletePending = false;
+
+    $('.deleteLocationBtn').click(onLocationDelete);
 
     newLocationForm.submit(onLocationSubmit);
 
@@ -17,6 +20,29 @@ $(document).ready(function() {
             .fail(function(response) {
                 alert('Failed to create location! Error: ' + response.responseText);
                 submitBtn.prop('disabled', false);
+            });
+    }
+
+    function onLocationDelete(event) {
+        if(deletePending) {
+            return;
+        }
+
+        var $this = $(this);
+        var locationId = $this.data('location-id');
+        $this.prop('disabled', true);
+        deletePending = true;
+
+        window.olympicsApi.deleteLocation(locationId)
+            .done(function(data) {
+                window.location.href = "/locations";
+            })
+            .fail(function(err) {
+                alert("Unable to delete location! " + err.responseText);
+                $this.prop('disabled', false);
+            })
+            .always(function() {
+                deletePending = false;
             });
     }
 });
