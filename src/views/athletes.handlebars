@@ -24,6 +24,7 @@
             <th>Country</th>
             <th>Age</th>
             <th>Gender</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
             <td>{{countryName}}</td>
             <td>{{age}}</td>
             <td>{{gender}}</td>
+            <td><button class="btn btn-danger deleteAthleteBtn" data-athlete-id="{{athleteId}}">Delete</button></td>
         </tr>
         {{/each}}
         </tbody>

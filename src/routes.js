@@ -183,6 +183,17 @@ module.exports.init = function(app) {
         });
     });
 
+    apiRoutes.delete('/athletes/:id', function(req, res, next) {
+        var athleteId = req.params.id;
+        Athlete.delete(athleteId, function(err, affectedRows) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success"});
+        });
+    });
+
     /**************************************************
      * Location endpoints.
    /**************************************************/

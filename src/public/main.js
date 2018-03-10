@@ -38,6 +38,14 @@
         });
     };
 
+    OlympicsApi.prototype.deleteAthlete = function(athleteId) {
+        var url = "/api/athletes/" + athleteId;
+        return $.ajax({
+            url: url,
+            type: 'DELETE'
+        });
+    };
+
     OlympicsApi.prototype.createEvent = function(eventData) {
         console.log('Creating POST');
         var url = "/api/event/create";

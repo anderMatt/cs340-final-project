@@ -27,7 +27,8 @@ Athlete.prototype.getAll = function(callback) {
 };
 
 Athlete.prototype.getByLastName = function(lastName, callback) {
-    var query = "SELECT a.first_name AS firstName, a.last_name AS lastName, " +
+    var query = "SELECT a.id AS athleteId, " +
+        "a.first_name AS firstName, a.last_name AS lastName, " +
         "a.age AS age, a.gender AS gender, c.name AS countryName " +
         "From athletes a " +
         "INNER JOIN countries c ON a.country_id = c.id " +
@@ -87,6 +88,18 @@ Athlete.prototype.create = function(newAthlete, callback) {
             return callback(err);
         }
         callback(null, results.insertId);
+    });
+};
+
+Athlete.prototype.delete = function(id, callback) {
+    var query = 'DELETE FROM athletes WHERE id = ?';
+
+    db.query(query, id, function(err, affectedRows) {
+        if(err) {
+            console.log("Error deleting an athlete: " + err);
+            return callback(err);
+        }
+        callback(null, affectedRows);
     });
 };
 

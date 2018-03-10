@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var searchTimeout = null;
+    var deletePending = false;
 
     var newAthleteForm = $('#addAthlete');
     var submitBtn = $('#submitAthlete');
@@ -11,6 +12,7 @@ $(document).ready(function() {
     initAthleteForm();
     lastNameSearchBtn.click(onLastNameSearch);
     refreshSearchBtn.click(onRefresh);
+    $('.deleteAthleteBtn').click(onAthleteDelete);
     newAthleteForm.submit(onAthleteSubmit);
 
     function initAthleteForm() {
@@ -54,6 +56,28 @@ $(document).ready(function() {
 
         function onRefresh(event) {
             document.location.href = "/athletes";
+        }
+
+        function onAthleteDelete(event) {
+            if(deletePending) {
+                return;
+            }
+
+            var $this = $(this);
+            var athleteId = $this.data('athlete-id');
+            $this.prop('disabled', true);
+            deletePending = true;
+
+            window.olympicsApi.deleteAthlete(athleteId)
+                .done(function(data) {
+                    deletePending = false;
+                    window.location.href = "/athletes";
+                })
+                .fail(function(err) {
+                    alert('Unable to delete athlete! ' + err.responseText);
+                    $this.prop('disabled', false);
+                    deletePending = false;
+                });
         }
 });
 
