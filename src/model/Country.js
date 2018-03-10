@@ -20,6 +20,18 @@ Country.prototype.getAll = function(callback) {
     });
 };
 
+Country.prototype.create = function(newCountry, callback) {
+    var query = 'INSERT INTO countries SET ?';
+
+    db.query(query, newCountry, function(err, results) {
+        if(err) {
+            console.log('Error inserting new country: ' + err);
+            return callback(err);
+        }
+        callback(null, results.insertId);
+    });
+};
+
 Country.prototype.getById = function(id, callback) {
 	var query = 'SELECT * FROM countries WHERE `id` = ?';
 	db.query(query, [id], function(err, results) {
@@ -33,13 +45,25 @@ Country.prototype.getById = function(id, callback) {
 
 // TODO: get counts by medal type?
 Country.prototype.getMedalCountsAllCountries = function(callback) {
-    var query = "SELECT c.id AS countryId, " +
-        "c.name AS countryName, COUNT(m.id) AS medalCount " +
-        "FROM medals m " +
-        "INNER JOIN athletes a ON m.winner = a.id " +
-        "INNER JOIN countries c ON c.id = a.country_id " +
-        "GROUP BY countryName " +
+
+    var query = "SELECT c.name AS countryName, c.id AS countryId, IFNULL(tmp.medalsCount, 0) AS medalCount " +
+        "FROM countries c " +
+        "LEFT JOIN " +
+        "(SELECT athletes.country_id AS cid, COUNT(medals.id) AS medalsCount " +
+        "FROM athletes " +
+        "INNER JOIN medals ON athletes.id = medals.winner " +
+        "GROUP BY cid " +
+        ") AS tmp ON c.id = tmp.cid " +
+        "GROUP BY c.name " +
         "ORDER BY medalCount DESC";
+
+    // var query = "SELECT c.id AS countryId, " +
+    //     "c.name AS countryName, COUNT(m.id) AS medalCount " +
+    //     " FROM countries c " +
+    //     "RIGHT JOIN athletes a ON a.country_id = c.id " +
+    //     "RIGHT JOIN medals m ON m.winner = a.id " +
+    //     "GROUP BY countryName " +
+    //     "ORDER BY medalCount DESC";
     db.query(query, function(err, results) {
         if(err) {
             console.log('An err occurred getting Country medal counts: ' + err);
