@@ -14,6 +14,7 @@ Country.prototype.getAll = function(callback) {
     db.query(query, function(err, results) {
         if(err) {
             console.log('An err occured getting all countries: ' + err);
+            return callback(err);
         }
         callback(null, results);
     });

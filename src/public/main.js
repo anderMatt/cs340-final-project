@@ -12,6 +12,22 @@
         });
     };
 
+    OlympicsApi.prototype.getAllEvents = function() {
+        var url = "/api/events";
+        return $.ajax({
+            url: url,
+            type: 'GET'
+        });
+    };
+    
+    OlympicsApi.prototype.getAllLocations = function() {
+        var url = "/api/locations";
+        return $.ajax({
+            url: url,
+            type: 'GET'
+        });
+    };
+
     OlympicsApi.prototype.createAthlete = function(athleteData) {
         var url = "/api/athlete/create";
         return $.ajax({
@@ -19,6 +35,17 @@
             type: 'POST',
             dataType: 'json',
             data: athleteData
+        });
+    };
+
+    OlympicsApi.prototype.createEvent = function(eventData) {
+        console.log('Creating POST');
+        var url = "/api/event/create";
+        return $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: eventData
         });
     };
 

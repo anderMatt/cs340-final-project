@@ -1,0 +1,58 @@
+<div class="row">
+    <h1 class="text-center">Events</h1>
+    {{#if events}}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each events}}
+                <tr>
+                    <td>{{eventName}}</td>
+                    <td>{{locationName}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <div>There are no events!</div>
+    {{/if}}
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Add an Event
+            </div>
+        </div>
+        <div class="panel-body text-center">
+            <form id="addEvent">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="name">Event Name: </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="location_id">Location: </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <select name="location_id" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <button id="submitEvent" type="submit" class="btn btn-primary">Add Event</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/events_page.js"></script>

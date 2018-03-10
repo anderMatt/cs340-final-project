@@ -6,12 +6,15 @@ March 9, 2018
 const express = require('express');
 const Country = require('./model/Country');
 const Athlete = require('./model/Athlete');
+const Event = require('./model/Event');
+const Location = require('./model/Location');
 
 /************************************
 DEFINE APP ROUTES HERE.
 /***********************************/
 module.exports.init = function(app) {
 
+    // Overview page - countries and medal counts.
 	app.get('/', function(req, res, next) {
 	    var context = {};
 		Country.getMedalCountsAllCountries(function(err, countries) {
@@ -24,6 +27,7 @@ module.exports.init = function(app) {
 		});
 	});
 
+	// All athletes.
 	app.get('/athletes', function(req, res, next) {
         var context = {};
         Athlete.getAll(function(err, athletes) {
@@ -33,6 +37,20 @@ module.exports.init = function(app) {
             context.athletes = athletes;
             return res.type('text/html')
                 .render('athletes', context);
+        });
+    });
+
+	// All events.
+
+    app.get('/events', function(req, res, next) {
+        var context = {};
+        Event.getAllWithLocation(function(err, events) {
+            if(err) {
+                return next(err);
+            }
+            context.events = events;
+            return res.type('text/html')
+                .render('events', context);
         });
     });
 
@@ -52,6 +70,7 @@ module.exports.init = function(app) {
         });
     });
 
+
     app.get('/profile/:athleteId', function(req, res, next) {
         var athleteId = req.params.athleteId;
         var context = {};
@@ -70,7 +89,8 @@ module.exports.init = function(app) {
 
 
     /**************************************************
-     * API methods for altering tables.
+     * API methods for altering tables and getting dynamic
+     * values.
      **************************************************/
     var apiRoutes = express.Router();
 
@@ -84,9 +104,39 @@ module.exports.init = function(app) {
         });
     });
 
+    apiRoutes.get('/events', function(req, res, next) {
+        Event.getAllWithLocation(function(err, events) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json(events);
+        });
+    });
+
+    apiRoutes.get('/locations', function(req, res, next) {
+        Location.getAll(function(err, locations) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json(locations);
+        });
+    });
+
+    apiRoutes.post('/event/create', function(req, res, next) {
+        var newEvent = req.body;
+        Event.create(newEvent, function(err, insertId) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success", id: insertId});
+        });
+    });
+
     apiRoutes.post('/athlete/create', function(req, res, next) {
         var newAthlete = req.body;
-        console.log("REQ.BODY: " + JSON.stringify(req.body));
         Athlete.create(newAthlete, function(err, insertId) {
             if(err) {
                 return next(err);
@@ -98,6 +148,7 @@ module.exports.init = function(app) {
 
     /* API error handler */
     apiRoutes.use(function(err, req, res, next) {
+        console.log('Caught API error: ' + err.stack);
         return res.status(500)
             .json({"error": err});
     });
