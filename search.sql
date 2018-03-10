@@ -33,6 +33,16 @@ a.last_name AS lastName, a.gender AS gender, a.age AS age
 FROM countries c
 INNER JOIN athletes a ON c.id = a.country_id;
 
+-- Selects all athletes by matching their last name against
+-- a user-entered search pattern--
+-- Output: {countryName, firstName, lastName, gender, age} --
+
+SELECT a.first_name AS firstName, a.last_name AS lastName, a.age AS age,
+a.gender AS gender, c.name AS countryName
+FROM athletes a
+INNER JOIN countries c ON a.country_id = c.id
+WHERE UPPER(a.last_name) LIKE UPPER('[lastNameInput]%');
+
 -- Creates a new athlete from form. --
 INSERT INTO athletes(first_name, last_name, country_id, gender, age)
 VALUES([firstName], [lastName], [countryId], [gender], [age]);

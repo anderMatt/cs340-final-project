@@ -16,9 +16,25 @@ Athlete.prototype.getAll = function(callback) {
         "a.age AS age " +
         "FROM countries c " +
         "INNER JOIN athletes a ON c.id = a.country_id";
+
     db.query(query, function(err, results) {
         if(err) {
             console.log("An err occured getting all athletes: " + err);
+            return callback(err);
+        }
+        callback(null, results);
+    });
+};
+
+Athlete.prototype.getByLastName = function(lastName, callback) {
+    var query = "SELECT a.first_name AS firstName, a.last_name AS lastName, " +
+        "a.age AS age, a.gender AS gender, c.name AS countryName " +
+        "From athletes a " +
+        "INNER JOIN countries c ON a.country_id = c.id " +
+        "WHERE UPPER(a.last_name) LIKE UPPER(?)";
+    db.query(query, [lastName + '%'], function(err, results) {
+        if(err) {
+            console.log('An err occurred getting Athlete by last name: ' + err);
             return callback(err);
         }
         callback(null, results);

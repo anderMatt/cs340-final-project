@@ -1,5 +1,21 @@
 <div class="row">
     <h1 class="text-center">Athletes</h1>
+    <div class="text-right col-sm-12" style="margin-top:25px;margin-bottom:25px;">
+        <div class="col-sm-3">
+            <label for="lastNameSearch">Last Name: </label>
+        </div>
+        <div class="col-sm-6 input-group">
+            <input type="text" name="lastNameSearch" class="form-control" value="{{lastNameSearch}}">
+            <span class="input-group-btn">
+                    <button class="btn btn-primary" id="lastNameSearchBtn" type="button">Search</button>
+                </span>
+            <span class="input-group-btn">
+                    <button class="btn btn-primary" id="refreshSearchBtn" type="button">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </button>
+                </span>
+        </div>
+    </div>
     {{#if athletes}}
     <table class="table">
         <thead>

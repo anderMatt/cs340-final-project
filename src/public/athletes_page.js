@@ -1,11 +1,17 @@
 $(document).ready(function() {
 
+    var searchTimeout = null;
+
     var newAthleteForm = $('#addAthlete');
     var submitBtn = $('#submitAthlete');
+    var lastNameSearch = $('input[name="lastNameSearch"]');
+    var lastNameSearchBtn = $('#lastNameSearchBtn');
+    var refreshSearchBtn = $('#refreshSearchBtn');
 
     initAthleteForm();
+    lastNameSearchBtn.click(onLastNameSearch);
+    refreshSearchBtn.click(onRefresh);
     newAthleteForm.submit(onAthleteSubmit);
-
 
     function initAthleteForm() {
         window.olympicsApi.getAllCountries()
@@ -35,6 +41,19 @@ $(document).ready(function() {
                 alert('Failed to create athlete! Error: ' + response.responseText);
                 submitBtn.prop('disabled', false);
             });
+        }
+
+        function onLastNameSearch(event) {
+            var lastName = lastNameSearch.val().trim();
+            if(lastName != "") {
+                document.location.href = "/athletes?lastname=" + encodeURIComponent(lastName);
+            } else {
+                document.location.href = "/athletes";
+            }
+        }
+
+        function onRefresh(event) {
+            document.location.href = "/athletes";
         }
 });
 

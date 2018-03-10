@@ -30,11 +30,21 @@ module.exports.init = function(app) {
 	// All athletes.
 	app.get('/athletes', function(req, res, next) {
         var context = {};
-        Athlete.getAll(function(err, athletes) {
+        var name = req.query.lastname;
+        var searchMethod;
+
+        if(name) {
+            searchMethod = Athlete.getByLastName.bind(Athlete, name);
+        } else {
+            searchMethod = Athlete.getAll.bind(Athlete);
+        }
+
+        searchMethod(function(err, athletes) {
             if(err) {
                 return next(err);
             }
             context.athletes = athletes;
+            context.lastNameSearch = name;
             return res.type('text/html')
                 .render('athletes', context);
         });
