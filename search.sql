@@ -47,6 +47,9 @@ WHERE UPPER(a.last_name) LIKE UPPER('[lastNameInput]%');
 INSERT INTO athletes(first_name, last_name, country_id, gender, age)
 VALUES([firstName], [lastName], [countryId], [gender], [age]);
 
+-- Deletes an athlete --
+DELETE FROM athletes WHERE id = [athleteId];
+
 -- Creates a new location from form. --
 INSERT INTO locations(name)
 VALUES ([locationName]);
