@@ -70,3 +70,10 @@ VALUES ([eventName], [eventLocationId]);
 INSERT INTO countries(name)
 VALUES [countryName];
 
+-- Schedule an athlete to an event from form. --
+INSERT INTO competes_in (aid, eid, event_date)
+VALUES ((SELECT id FROM athletes WHERE first_name = [firstName] AND last_name = [lastName]), (SELECT id FROM events WHERE name = [event]), STR_TO_DATE([eventDate], '%m-%d-%y'));
+
+-- Remove an athlete from an event from form. --
+DELETE FROM competes_in
+WHERE aid = (SELECT id FROM athletes WHERE first_name = [firstName] AND last_name = [lastName]) AND eid = (SELECT id FROM events WHERE name = [event]);
