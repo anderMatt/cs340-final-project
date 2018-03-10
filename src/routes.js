@@ -99,11 +99,17 @@ module.exports.init = function(app) {
 
 
 
+    /*************************************************/
     /**************************************************
      * API methods for altering tables and getting dynamic
      * values.
      **************************************************/
+    /*************************************************/
     var apiRoutes = express.Router();
+
+    /**************************************************
+     * Country endpoints.
+     /**************************************************/
 
     apiRoutes.get('/countries', function(req, res, next) {
         Country.getAll(function(err, countries) {
@@ -115,6 +121,22 @@ module.exports.init = function(app) {
         });
     });
 
+    apiRoutes.post('/countries/create', function(req, res, next) {
+        var newCountry = req.body;
+
+        Country.create(newCountry, function(err, insertId) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success", id: insertId});
+        });
+    });
+
+    /**************************************************
+     * Event endpoints.
+     /**************************************************/
+
     apiRoutes.get('/events', function(req, res, next) {
         Event.getAllWithLocation(function(err, events) {
             if(err) {
@@ -122,16 +144,6 @@ module.exports.init = function(app) {
             }
             return res.status(200)
                 .json(events);
-        });
-    });
-
-    apiRoutes.get('/locations', function(req, res, next) {
-        Location.getAll(function(err, locations) {
-            if(err) {
-                return next(err);
-            }
-            return res.status(200)
-                .json(locations);
         });
     });
 
@@ -146,6 +158,10 @@ module.exports.init = function(app) {
         });
     });
 
+    /**************************************************
+     * Athlete endpoints.
+    /**************************************************/
+
     apiRoutes.post('/athlete/create', function(req, res, next) {
         var newAthlete = req.body;
         Athlete.create(newAthlete, function(err, insertId) {
@@ -157,6 +173,18 @@ module.exports.init = function(app) {
         });
     });
 
+    /**************************************************
+     * Location endpoints.
+   /**************************************************/
+    apiRoutes.get('/locations', function(req, res, next) {
+        Location.getAll(function(err, locations) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json(locations);
+        });
+    });
     apiRoutes.post('/location/create', function(req, res, next) {
         var newLocation = req.body;
         Location.create(newLocation, function(err, insertId) {
@@ -168,6 +196,9 @@ module.exports.init = function(app) {
         });
     });
 
+    /**************************************************
+     * API ERROR HANDLERS
+    ************************************************** /
     /* API error handler */
     apiRoutes.use(function(err, req, res, next) {
         console.log('Caught API error: ' + err.stack);
@@ -175,7 +206,8 @@ module.exports.init = function(app) {
             .json({"error": err});
     });
 
-
+/**************************************************
+ **************************************************/
     // Hook up API routes to the application.
     app.use('/api', apiRoutes);
 };

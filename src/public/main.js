@@ -59,6 +59,15 @@
         });
     };
 
+    OlympicsApi.prototype.createCountry = function(countryData) {
+        var url = "/api/countries/create";
+        return $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: countryData
+        });
+    };
 
 
 })(window);
