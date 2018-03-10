@@ -49,6 +49,16 @@
         });
     };
 
+    OlympicsApi.prototype.createLocation = function(locationData) {
+        var url = "/api/location/create";
+        return $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: locationData
+        });
+    };
+
 
 
 })(window);

@@ -54,8 +54,19 @@ module.exports.init = function(app) {
         });
     });
 
-	//Country page - show its athletes?
+    app.get('/locations', function(req, res, next) {
+        var context = {};
+        Location.getAll(function(err, locations) {
+            if(err) {
+                return next(err);
+            }
+            context.locations = locations;
+            return res.type('text/html')
+                .render('locations', context);
+        });
+    });
 
+	//Country page - show its athletes?
     app.get('/country/:countryId', function(req, res, next) {
 	    var countryId = req.params.countryId;
 	    var context = {};
@@ -138,6 +149,17 @@ module.exports.init = function(app) {
     apiRoutes.post('/athlete/create', function(req, res, next) {
         var newAthlete = req.body;
         Athlete.create(newAthlete, function(err, insertId) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success", id: insertId});
+        });
+    });
+
+    apiRoutes.post('/location/create', function(req, res, next) {
+        var newLocation = req.body;
+        Location.create(newLocation, function(err, insertId) {
             if(err) {
                 return next(err);
             }

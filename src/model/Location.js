@@ -20,4 +20,15 @@ Location.prototype.getAll = function(callback) {
     });
 };
 
+Location.prototype.create = function(newLocation, callback) {
+    var query = 'INSERT INTO locations SET ?';
+    db.query(query, newLocation, function(err, results) {
+        if(err) {
+            console.log('Error inserting new location: ' + err);
+            return callback(err);
+        }
+        callback(null, results.insertId);
+    });
+};
+
 module.exports = new Location();

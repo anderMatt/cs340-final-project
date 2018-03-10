@@ -1,0 +1,47 @@
+<div class="row">
+    <h1 class="text-center">Locations</h1>
+    {{#if locations}}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each locations}}
+                <tr>
+                    <td>{{locationName}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+
+    {{else}}
+        <div>There are no locations! Add some below.</div>
+    {{/if}}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Add a Location.
+            </div>
+        </div>
+        <div class="panel-body text-center">
+            <form id="addLocation">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="name">Location Name: </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name" />
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="submitLocation" type="submit">Add Location</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/locations_page.js"></script>
