@@ -10,6 +10,13 @@ INNER JOIN medals m ON (e.id = m.event_id)
 	WHERE (m.winner = a.id);
 
 
+-- Query to get Schedule of events --
+-- Returns: Event, First Name, Last Name, Date, Location --
+SELECT e.name AS 'Event', a.first_name AS 'First Name', a.last_name AS 'Last Name', ci.event_date AS 'Date', l.name AS 'Location' FROM athletes a 
+	INNER JOIN competes_in ci ON (a.id = ci.aid)
+    INNER JOIN events e ON (ci.eid = e.id)
+    INNER JOIN locations l ON (e.location_id = l.id);
+
 
 -- Selects medal counts by country. --
 -- Does not distinguish type of medal. --
