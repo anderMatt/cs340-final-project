@@ -185,6 +185,16 @@ module.exports.init = function(app) {
      * Athlete endpoints.
     /**************************************************/
 
+    apiRoutes.get('/athletes', function(req, res, next) {
+        Athlete.getAll(function(err, athletes) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json(athletes);
+        });
+    });
+
     apiRoutes.post('/athlete/create', function(req, res, next) {
         var newAthlete = req.body;
         Athlete.create(newAthlete, function(err, insertId) {
