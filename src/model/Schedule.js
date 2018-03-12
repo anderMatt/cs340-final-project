@@ -14,7 +14,7 @@ Schedule.prototype.getAll = function(callback) {
 	"INNER JOIN competes_in ci ON (a.id = ci.aid) " +
     "INNER JOIN events e ON (ci.eid = e.id) " +
     "INNER JOIN locations l ON (e.location_id = l.id) " +
-    "ORDER BY eventDate DESC;";
+    "ORDER BY eventDate ASC;";
     
     db.query(query, function(err, results){
         if(err) {
