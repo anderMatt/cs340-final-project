@@ -1,0 +1,66 @@
+<div class="row">
+    {{#if schedule}}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Event</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each schedule}}
+            <tr>
+                <td>{{eventName}}</td>
+                <td><a href="/profile/{{athleteId}}"> {{firstName}} {{lastName}}</a></td>
+                <td>{{countryName}}</td>
+                <td>{{eventDate}}</td>
+                <td>{{eventLocation}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+    
+        </table>
+    {{else}}
+        <div>There are no events! Add some below!</div>
+    {{/if}}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Schedule an Athlete
+            </div>
+        </div>
+        <div class="panel-body text-center">
+            <form id="scheduleAthlete">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="aid">Athlete: </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="aid" class="form-control"></select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="eid">Event: </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="eid" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        
+                    </div>
+                </div>
+                <button id="submitSchedule" type="submit" class="btn btn-primary">Schedule Athlete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/schedule_page.js"></script>

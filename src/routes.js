@@ -9,6 +9,7 @@ const Athlete = require('./model/Athlete');
 const Event = require('./model/Event');
 const Location = require('./model/Location');
 const Medal = require('./model/Medal');
+const Schedule = require('./model/Schedule');
 
 /************************************
 DEFINE APP ROUTES HERE.
@@ -74,6 +75,18 @@ module.exports.init = function(app) {
             context.locations = locations;
             return res.type('text/html')
                 .render('locations', context);
+        });
+    });
+    
+    app.get('/schedule', function(req, res, next) {
+        var context = {};
+        Schedule.getAll(function(err, schedule) {
+            if(err) {
+                return next(err);
+            }
+            context.schedule = schedule;
+            return res.type('text/html')
+                .render('schedule', context);
         });
     });
 
@@ -182,6 +195,16 @@ module.exports.init = function(app) {
      * Athlete endpoints.
     /**************************************************/
 
+    apiRoutes.get('/athletes', function(req, res, next) {
+        Athlete.getAll(function(err, athletes) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json(athletes);
+        });
+    });
+
     apiRoutes.post('/athlete/create', function(req, res, next) {
         var newAthlete = req.body;
         Athlete.create(newAthlete, function(err, insertId) {
@@ -236,6 +259,19 @@ module.exports.init = function(app) {
             }
             return res.status(200)
                 .json({status: "success"});
+        });
+    });
+    
+    /**************************************************
+     * Schedule endpoints.
+    /**************************************************/
+    apiRoutes.get('/schedule', function(req, res, next) {
+        Schedule.getAll(function(err, schedule){
+            if(err){
+                return next (err);
+            }
+            return res.status(200)
+                .json(schedule);
         });
     });
 

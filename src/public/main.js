@@ -3,6 +3,14 @@
     window.olympicsApi = window.olympicsApi || new OlympicsApi();
 
     function OlympicsApi(){}
+    
+    OlympicsApi.prototype.getAllAthletes = function() {
+        var url = "/api/athletes";
+        return $.ajax({
+            url: url,
+            type: 'GET'
+        });
+    };
 
     OlympicsApi.prototype.getAllCountries = function() {
         var url = "/api/countries";
