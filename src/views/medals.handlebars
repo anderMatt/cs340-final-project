@@ -1,0 +1,28 @@
+<div class="row">
+    <h1 class="text-center">Medals</h1>
+</div>
+
+{{#if medals}}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Winner</th>
+            <th>Type</th>
+            <th>Event</th>
+            <th>RESULT?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each medals}}
+            <tr>
+                <td>{{winnerFirstName}} {{winnerLastName}}</td>
+                <td>{{type}}</td>
+                <td>{{eventName}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+{{else}}
+    <div>No medals have been awarded!</div>
+{{/if}}

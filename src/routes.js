@@ -8,6 +8,7 @@ const Country = require('./model/Country');
 const Athlete = require('./model/Athlete');
 const Event = require('./model/Event');
 const Location = require('./model/Location');
+const Medal = require('./model/Medal');
 
 /************************************
 DEFINE APP ROUTES HERE.
@@ -106,8 +107,17 @@ module.exports.init = function(app) {
         });
     });
 
-
-
+    app.get('/medals', function(req, res, next) {
+        var context = {};
+        Medal.getAll(function(err, medals) {
+            if(err) {
+                return next(err);
+            }
+            context.medals = medals;
+            return res.type('text/html')
+                .render('medals', context);
+        });
+    });
 
     /*************************************************/
     /**************************************************
@@ -228,6 +238,8 @@ module.exports.init = function(app) {
                 .json({status: "success"});
         });
     });
+
+
 
     /**************************************************
      * API ERROR HANDLERS
