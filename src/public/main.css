@@ -3,3 +3,25 @@
     height: 100%;
     width: 50px;
 }
+
+.medal {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: red;
+    border: 1px solid #a6a6a6;
+}
+
+.medal.gold {
+    background-color: #FFD700;
+}
+
+.medal.silver{
+    background-color: #c0c0c0;
+}
+
+.medal.bronze {
+    background-color: #cd7f32;
+}
+

@@ -62,6 +62,15 @@
         });
     };
 
+    OlympicsApi.prototype.deleteMedal = function(medalId) {
+        console.log("Deleting medal: " + medalId);
+        var url = "/api/medal/" + medalId;
+        return $.ajax({
+            url: url,
+            type: 'DELETE'
+        });
+    };
+
     OlympicsApi.prototype.createEvent = function(eventData) {
         console.log('Creating POST');
         var url = "/api/event/create";

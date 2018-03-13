@@ -275,7 +275,19 @@ module.exports.init = function(app) {
         });
     });
 
-
+    /**************************************************
+     * Medal endpoints.
+     /**************************************************/
+    apiRoutes.delete('/medal/:id', function(req, res, next) {
+        var medalId = req.params.id;
+        Medal.delete(medalId, function(err, affectedRows) {
+            if(err) {
+                return next(err);
+            }
+            return res.status(200)
+                .json({status: "success"});
+        });
+    });
 
     /**************************************************
      * API ERROR HANDLERS

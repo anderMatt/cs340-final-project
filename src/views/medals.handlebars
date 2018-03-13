@@ -9,15 +9,16 @@
             <th>Winner</th>
             <th>Type</th>
             <th>Event</th>
-            <th>RESULT?</th>
         </tr>
         </thead>
         <tbody>
         {{#each medals}}
             <tr>
                 <td>{{winnerFirstName}} {{winnerLastName}}</td>
-                <td>{{type}}</td>
+                <td><span class="medal {{type}}"></span></td>
                 <td>{{eventName}}</td>
+                <td>
+                    <button class="btn btn-danger deleteMedalBtn" data-medal-id="{{medalId}}">Unassign</button></td>
             </tr>
         {{/each}}
         </tbody>
@@ -26,3 +27,5 @@
 {{else}}
     <div>No medals have been awarded!</div>
 {{/if}}
+
+<script src="/medals_page.js"></script>
