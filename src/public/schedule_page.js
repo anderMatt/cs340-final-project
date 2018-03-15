@@ -1,11 +1,13 @@
 $(document).ready(function() {
-
+    var newScheduleForm = $('#scheduleAthlete');
+    var submitBtn = $('#submitSchedule');
     var deletePending = false;
 
     initScheduleFormAthletes();
     initScheduleFormEvents();
     
     $('.unscheduleButton').click(unscheduleEvent);
+    newScheduleForm.submit(onScheduleSubmit);
 
     function initScheduleFormAthletes() {
         window.olympicsApi.getAllAthletes()
@@ -34,6 +36,21 @@ $(document).ready(function() {
                 });
             });
     }
+    
+    function onScheduleSubmit() {
+        event.preventDefault()
+        submitBtn.prop('disabled', true);
+        
+        var formData = newScheduleForm.serialize();
+        window.olympicsApi.scheduleEvent(formData)
+            .done(function(data) {
+                location.reload(true);
+            })
+            .fail(function(response) {
+                alert('Failed to schedule event! Error: ' + response.responseText);
+                submitBtn.prop('disabled', false);
+            });
+    };
     
     function unscheduleEvent(event){
         if(deletePending) {

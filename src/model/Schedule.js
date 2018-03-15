@@ -25,6 +25,18 @@ Schedule.prototype.getAll = function(callback) {
     });
 };
 
+Schedule.prototype.newSchedule = function(aid, eid, date, callback) {
+    var query = "INSERT INTO competes_in (aid, eid, event_date) VALUES (?,?,?);";
+    
+    db.query(query, [aid, eid, date], function(err, affectedRows) {
+        if(err) {
+            console.log("Error unscheduling an event: " + err);
+            return callback(err);
+        }
+        callback(null, affectedRows);
+    });
+}
+
 Schedule.prototype.delete = function(aid, eid, callback) {
     var query = 'DELETE FROM competes_in WHERE aid = ? AND eid = ?';
     

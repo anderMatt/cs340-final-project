@@ -275,9 +275,17 @@ module.exports.init = function(app) {
         });
     });
     
+    apiRoutes.post('/schedule/create', function(req, res, next) {
+        Schedule.newSchedule(req.body.aid, req.body.eid, req.body.date, function(err, schedule){
+            if(err){
+                return next(err);
+            }
+            return res.status(200)
+                .json(schedule);
+        })
+    });
+    
     apiRoutes.delete('/unschedule/:aid&:eid', function(req, res, next) {
-        console.log(req.params.aid);
-        console.log(req.params.eid);
         Schedule.delete(req.params.aid, req.params.eid, function(err, schedule){
             if(err){
                 return next (err);

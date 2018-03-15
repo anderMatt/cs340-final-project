@@ -102,6 +102,16 @@
         });
     };
     
+    OlympicsApi.prototype.scheduleEvent = function(scheduleData) {
+        var url = "/api/schedule/create";
+        return $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: scheduleData
+        });
+    }
+    
     OlympicsApi.prototype.unschedule = function(aid, eid) {
         var url = "/api/unschedule/" + aid + "&" + eid;
         return $.ajax({
