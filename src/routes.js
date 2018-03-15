@@ -274,6 +274,18 @@ module.exports.init = function(app) {
                 .json(schedule);
         });
     });
+    
+    apiRoutes.delete('/unschedule/:aid&:eid', function(req, res, next) {
+        console.log(req.params.aid);
+        console.log(req.params.eid);
+        Schedule.delete(req.params.aid, req.params.eid, function(err, schedule){
+            if(err){
+                return next (err);
+            }
+            return res.status(200)
+                .json(schedule);
+        });
+    });
 
     /**************************************************
      * Medal endpoints.

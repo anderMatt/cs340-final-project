@@ -101,6 +101,14 @@
             data: countryData
         });
     };
+    
+    OlympicsApi.prototype.unschedule = function(aid, eid) {
+        var url = "/api/unschedule/" + aid + "&" + eid;
+        return $.ajax({
+            url: url,
+            type: 'DELETE'
+        });
+    }
 
 
 })(window);

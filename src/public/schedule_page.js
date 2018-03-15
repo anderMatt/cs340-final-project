@@ -1,7 +1,11 @@
 $(document).ready(function() {
 
+    var deletePending = false;
+
     initScheduleFormAthletes();
     initScheduleFormEvents();
+    
+    $('.unscheduleButton').click(unscheduleEvent);
 
     function initScheduleFormAthletes() {
         window.olympicsApi.getAllAthletes()
@@ -28,6 +32,30 @@ $(document).ready(function() {
                     }
                     dropdown.append(option);
                 });
+            });
+    }
+    
+    function unscheduleEvent(event){
+        if(deletePending) {
+            return;
+        }
+
+        var $this = $(this);
+        var aid = $this.data('unschedule-athlete');
+        var eid = $this.data('unschedule-event');
+        $this.prop('disabled', true);
+        deletePending = true;
+
+        window.olympicsApi.unschedule(aid, eid)
+            .done(function(data) {
+                window.location.href = "/schedule";
+            })
+            .fail(function(err) {
+                alert("Unable to unschedule event! " + err.responseText);
+                $this.prop('disabled', false);
+            })
+            .always(function() {
+                deletePending = false;
             });
     }
     
