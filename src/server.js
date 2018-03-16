@@ -48,12 +48,6 @@ app.use(function(err, req, res, next) {
 /******************************
 Spin up server
 ******************************/
-/*
 app.listen(app.get('port'), function(){
 	console.log('Express listening on port ' + app.get('port'));
-});
-*/
-
-app.listen(process.env.PORT, process.env.IP, function(){
-   console.log('Your application has begun'); 
 });
