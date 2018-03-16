@@ -33,4 +33,16 @@ Event.prototype.create = function(newEvent, callback) {
     });
 };
 
+Event.prototype.delete = function(event, callback) {
+    var query = "DELETE FROM events WHERE id = ?";
+    
+    db.query(query, event, function(err, affectedRows) {
+        if(err) {
+            console.log("Error canceling an event: " + err);
+            return callback(err);
+        }
+        callback(null, affectedRows);
+    });
+}
+
 module.exports = new Event();

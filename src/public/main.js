@@ -81,6 +81,14 @@
             data: eventData
         });
     };
+    
+    OlympicsApi.prototype.cancelEvent = function(event) {
+        var url = "/api/event/cancel/" + event;
+        return $.ajax({
+            url: url,
+            type: 'DELETE'
+        });
+    }
 
     OlympicsApi.prototype.createLocation = function(locationData) {
         var url = "/api/location/create";

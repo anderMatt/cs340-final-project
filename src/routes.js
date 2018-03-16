@@ -190,6 +190,16 @@ module.exports.init = function(app) {
                 .json({status: "success", id: insertId});
         });
     });
+    
+    apiRoutes.delete('/event/cancel/:event', function(req, res, next) {
+         Event.delete(req.params.event, function(err, schedule){
+            if(err){
+                return next (err);
+            }
+            return res.status(200)
+                .json(schedule);
+        });
+    });
 
     /**************************************************
      * Athlete endpoints.

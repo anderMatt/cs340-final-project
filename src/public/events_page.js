@@ -1,9 +1,11 @@
 $(document).ready(function() {
     var newEventForm = $('#addEvent');
     var submitBtn = $('#submitEvent');
+    var deletePending = false;
 
     initEventForm();
     newEventForm.submit(onEventSubmit);
+    $('.cancelButton').click(cancelEvent);
 
     function initEventForm() {
         window.olympicsApi.getAllLocations()
@@ -33,5 +35,28 @@ $(document).ready(function() {
                 alert('Failed to create event! Error: ' + response.responseText);
                 submitBtn.prop('disabled', false);
             });
-    }
+        }
+        
+        function cancelEvent() {
+            if(deletePending) {
+            return;
+        }
+
+        var $this = $(this);
+        var event = $this.data('cancel-event');
+        $this.prop('disabled', true);
+        deletePending = true;
+
+        window.olympicsApi.cancelEvent(event)
+            .done(function(data) {
+                window.location.href = "/events";
+            })
+            .fail(function(err) {
+                alert("Unable to cancel event! " + err.responseText);
+                $this.prop('disabled', false);
+            })
+            .always(function() {
+                deletePending = false;
+            });
+        }
 });
